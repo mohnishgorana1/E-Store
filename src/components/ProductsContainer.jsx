@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useLoaderData } from "react-router-dom";
 
 function ProductsContainer() {
+  
   const { meta } = useLoaderData();
   console.log(meta);
 
