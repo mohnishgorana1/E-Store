@@ -1,6 +1,8 @@
 import { Link, useLoaderData, useParams } from "react-router-dom";
 import { customFetch, formatPrice, generateAmountOptions } from "../utils";
 import { useState } from "react";
+import { addItem } from "../features/cart/cartSlice";
+import { useDispatch } from "react-redux";
 
 export const loader = async({ params }) => {
   const response = await customFetch(`/products/${params.id}`);
@@ -22,9 +24,25 @@ function SingleProduct() {
 
   const handleAmount = (e) => {
     setAmount(e.target.value);
-
   }
 
+  const cartProduct = {
+    cartID: product.id + productColor,
+    productID: product.id,
+    image,
+    title,
+    price, 
+    amount,
+    company,
+    productColor,
+  }
+
+  const dispatch = useDispatch();
+
+  const addToCart = () => {
+    dispatch(addItem({ product: cartProduct }))  //action.payload ke andar product aaya h jake addItem reducer me lelo
+
+  }
 
 
 
@@ -91,6 +109,7 @@ function SingleProduct() {
           <div className="mt-11">
               <button 
                 className="btn btn-secondary btn-md"
+                onClick={addToCart}
               >
                 Add to Bag
               </button>
